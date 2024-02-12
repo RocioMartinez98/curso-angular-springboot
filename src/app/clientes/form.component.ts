@@ -13,6 +13,8 @@ export class FormComponent {
   public cliente : Cliente = new Cliente;
   private titulo : string = "Agregar cliente";
 
+  public errores : string[];
+
   constructor(private clienteService : ClienteService,
     private router : Router,
     private activatedRoute : ActivatedRoute){}
@@ -35,6 +37,9 @@ export class FormComponent {
     .subscribe(cliente =>{
       this.router.navigate(['/clientes'])
       swal('Cliente actualizado',`Cliente ${this.cliente.nombre} actualizado exitosamente`, 'success')
+    },
+    err => {
+      this.errores = err.error.errors as string[];
     })
   }
 
@@ -43,8 +48,10 @@ export class FormComponent {
     cliente =>{
       this.router.navigate(['/clientes'])
       swal('Cliente agregado',`Cliente ${this.cliente.nombre} creado con exitosamente`, 'success')
-  }
-    );
+  },
+  err => {
+    this.errores = err.error.errors as string[];
+  });
   }
 
   
