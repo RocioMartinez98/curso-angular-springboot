@@ -3,6 +3,7 @@ import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2'
+import { tap } from 'rxjs';
 
 
 @Component({
@@ -12,23 +13,35 @@ import swal from 'sweetalert2'
 
 
 export class ClientesComponent {
-  clientes: Cliente[];
+  clientes: Cliente[];  
+  public paginador : any;
 
-  
+  constructor(private clienteService: ClienteService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
+    
 
-  constructor(private clienteService : ClienteService,
-    private router : Router,
-    private activatedRoute : ActivatedRoute){}
-
-  
-
-  ngOnInit(){
-    this.clienteService.getClientes().subscribe(
-      clientes => this.clientes = clientes
-    );
+  ngOnInit() {
+    this.activatedRoute.paramMap.subscribe(params => {
+      let page: number = +params.get('page'); //El operador + convierte a number
+      if (!page) {
+        page = 0;
+      }
+      this.clienteService.getClientes(page).pipe(
+        tap(response => {
+          console.log('ClientesComponent: tap 3');
+          (response.content as Cliente[]).forEach(cliente => {
+            console.log(cliente.nombre);
+          });
+        })
+      ).subscribe(response => {
+        this.clientes = response.content as Cliente[]
+        this.paginador = response;
+      });
+    })
   }
 
-  delete(cliente : Cliente) : void{
+  delete(cliente: Cliente): void {
     swal({
       title: "¿Estás seguro?",
       text: `¿Seguro quiere eliminar al cliente ${cliente.nombre} ${cliente.apellido}?`,
@@ -53,8 +66,8 @@ export class ClientesComponent {
             );
           }
         )
-        
-      } 
+
+      }
     });
 
   }

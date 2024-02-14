@@ -1,0 +1,28 @@
+.navbar {
+  background-color: grey;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.navbar-brand {
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.navbar-nav .nav-item .nav-link {
+  color: #fff;
+}
+
+.navbar-nav .nav-item.active .nav-link {
+  font-weight: bold;
+}
+
+.navbar .form-control {
+  background-color: #fff;
+  border-color: #fff;
+  color: #000000;
+}
+
+.navbar .btn-outline-success {
+  color: #fff;
+  border-color: #fff;
+}
