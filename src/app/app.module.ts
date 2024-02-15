@@ -15,6 +15,7 @@ import { PaginatorComponent } from './paginator/paginator.component';
 import {MatNativeDateModule} from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DetalleComponent } from './clientes/detalle/detalle.component';
 
 
 
@@ -35,7 +36,8 @@ const routes : Routes =[
     DirectivaComponent,
     ClientesComponent,
     FormComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    DetalleComponent
   ],
   imports: [
     BrowserModule,

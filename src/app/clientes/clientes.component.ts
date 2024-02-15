@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
+import { ModalService } from './detalle/modal.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2'
 import { tap } from 'rxjs';
@@ -15,10 +16,12 @@ import { tap } from 'rxjs';
 export class ClientesComponent {
   clientes: Cliente[];  
   public paginador : any;
+  clienteSeleccionado : Cliente;
 
   constructor(private clienteService: ClienteService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private modalService : ModalService) { }
     
 
   ngOnInit() {
@@ -38,6 +41,14 @@ export class ClientesComponent {
         this.clientes = response.content as Cliente[]
         this.paginador = response;
       });
+    })
+    this.modalService.notificarUpload.subscribe(cliente =>{
+      this.clientes = this.clientes.map(clienteOriginal =>{
+        if(cliente.id==clienteOriginal.id){
+          clienteOriginal.foto = cliente.foto;
+        }
+        return clienteOriginal;
+      })
     })
   }
 
@@ -70,6 +81,11 @@ export class ClientesComponent {
       }
     });
 
+  }
+
+  abrirModal(cliente:Cliente){
+    this.clienteSeleccionado=cliente;
+    this.modalService.abrirModal();
   }
 
 }
