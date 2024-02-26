@@ -5,6 +5,7 @@ import { ModalService } from './detalle/modal.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2'
 import { tap } from 'rxjs';
+import { AuthService } from '../usuarios/auth.service';
 
 
 @Component({
@@ -21,7 +22,8 @@ export class ClientesComponent {
   constructor(private clienteService: ClienteService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private modalService : ModalService) { }
+    private modalService : ModalService,
+    public authService : AuthService) { }
     
 
   ngOnInit() {

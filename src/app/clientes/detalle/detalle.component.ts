@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import { ModalService } from './modal.service';
 import { HttpEventType } from '@angular/common/http';
+import { AuthService } from 'src/app/usuarios/auth.service';
 
 @Component({
   selector: 'detalle-cliente',
@@ -20,7 +21,8 @@ export class DetalleComponent {
 
   constructor(private clienteService : ClienteService,
     private activatedRoute : ActivatedRoute,
-    public modalService : ModalService){
+    public modalService : ModalService,
+    public authService : AuthService){
 
   }
 
